@@ -2,10 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Example Landing Page</title>
   <style>
@@ -117,7 +114,7 @@
 
       .sideNavigationBar a:hover {
           color: white;
-      }
+        }
 
       .sideNavigationBar .closeButton {
           position: absolute;
@@ -504,21 +501,31 @@
     </div>
   </footer>
   
+  <!-- 1. Основний скрипт чату Respond.io -->
   <script id="respondio__widget" src="https://cdn.respond.io/webchat/widget/widget.js?cId=4b4a641087d08e789e5a2ae98b11236"></script>
 
+  <!-- 2. Скрипт ініціалізації та передачі даних контакту -->
   <script>
     (function() {
+      // Перевіряємо наявність об'єкта respondio кожні 200 мілісекунд
       var checkExist = setInterval(function() {
         if (window.respondio && typeof window.respondio.updateContact === 'function') {
+          console.log("=== RESPOND.IO ГОТОВИЙ, ПУШИМО ДАНІ ===");
           
+          // Генеруємо унікальний externalId на основі поточного часу, щоб скинути стару анонімну сесію
+          var uniqueUserId = "user_" + Date.now();
+
           window.respondio.updateContact({
-            email: "neroda.sergey1998@gmail.com"
+            externalId: uniqueUserId,
+            email: "neroda.sergey1998@gmail.com",
+            firstName: "Serhii"
           });
           
           clearInterval(checkExist);
         }
       }, 200);
 
+      // Безпечний таймаут: якщо за 10 секунд чат не завантажився — зупиняємо цикл
       setTimeout(function() {
         clearInterval(checkExist);
       }, 10000);
